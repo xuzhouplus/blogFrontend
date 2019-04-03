@@ -1,0 +1,91 @@
+#workplace {
+	width: 100%;
+	height: auto;
+	background: #f4f4f4;
+
+}
+
+#workplacewrap {
+	margin: 0px auto;
+	width: 1200px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+	border-right: 1px solid #f0f0f0;
+	border-left: 1px solid #f0f0f0;
+	background: #f4f4f4;
+	font-family: "微软雅黑 Light";
+	padding: 5px;
+}
+
+#operateplace {
+	padding: 4px;
+	border: 1px solid #bababa;
+
+}
+
+#sourceImage {
+	width: 500px;
+	height: 300px;
+	border: 1px solid #bababa;
+	background: none;
+	margin-bottom: -1px;
+	overflow: hidden;
+}
+
+#sourceImage img {
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.btn {
+	background: #aa0000;
+	border: #F8F8F8;
+	color: white;
+	padding: 5px;
+}
+
+.btn:hover {
+	cursor: pointer;
+	background: #cc1234;
+}
+
+.operation {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	height: 50px;
+}
+
+.showinfo {
+
+	margin-bottom: -1px;
+	font-size: 12px;
+}
+
+#showwindow {
+	justify-self: flex-end;
+	align-items: flex-end;
+	width: 500px;
+	height: auto;
+	border: #baabba 1px solid;
+	margin-left: 5px;
+	padding: 5px;
+	overflow: hidden;
+	position:relative;
+}
+
+#previewwindow {
+	border: 1px solid #bababa;
+	width: 500px;
+	height: 300px;
+}
+#pologen
+{
+	border:1px solid red;
+	position:relative;
+	display:none;
+}
