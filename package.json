@@ -26,6 +26,7 @@
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^8.7.0",
     "three": "^0.103.0",
+    "video.js": "^7.4.1",
     "webuploader": "^0.1.8"
   },
   "scripts": {

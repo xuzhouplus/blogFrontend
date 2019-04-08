@@ -1,0 +1,16 @@
+/*.webuploader-container {*/
+	/*position: absolute;*/
+	/*z-index: 9999;*/
+/*}*/
+
+.webuploader-pick {
+	position: relative;
+	display: block;
+	cursor: pointer;
+	background-color: #343a40;
+	padding: unset;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}

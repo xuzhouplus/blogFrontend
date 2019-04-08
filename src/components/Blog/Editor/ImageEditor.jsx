@@ -8,6 +8,7 @@ import {hideValidformError, initValidform, showValidformError} from "../../Valid
 import $ from "jquery";
 import {alertTypes, modalAlert} from "../../Modal/ModalAlert";
 import {faCut} from "@fortawesome/free-solid-svg-icons";
+import {fileUploader} from "../../FileUploader/FileUploader";
 
 class ImageEditor extends React.Component {
 	constructor(props) {
@@ -98,7 +99,44 @@ class ImageEditor extends React.Component {
 	}
 
 	initialiseImageUploader() {
+		const uploader = fileUploader({
+			disableGlobalDnd: true,
+			pick: {
+				id: '#filePicker',
+				innerHTML:'点击按钮选择图片'
+			},
+			dnd: '#uploader .drop-zone',
+			paste: document.body,
+			// 只允许选择图片文件。
+			accept: {
+				title: 'Images',
+				extensions: 'gif,jpg,jpeg,bmp,png',
+				mimeTypes: 'image/*'
+			},
+			onFileQueued: function (file) {
+				uploader.makeThumb(file, function (error, ret) {
+					if (error) {
+						$('.img-preview').text('预览错误');
+					} else {
+						$('#filePicker').hide();
+						$('.img-preview').append('<img alt="" src="' + ret + '" />');
+					}
+				});
+			},
+			onUploadProgress: function (file, percentage) {
 
+			},
+			onUploadSuccess: function (file) {
+
+			},
+			onUploadError: function (file) {
+
+			},
+			onUploadComplete: function (file) {
+
+			}
+		});
+		console.log(uploader);
 	}
 
 	componentDidMount() {
@@ -139,27 +177,14 @@ class ImageEditor extends React.Component {
 							<div className="col-md-12">
 								<label className="control-label" htmlFor="code">图片</label>
 								<div className="card">
-									<div className="card-header bg-dark p-0">
-										<div className="row">
-											<div className="text-right col-12 operateBar">
-												<a href="javascript:void(0);"
-												   className="btn text-light upload-code-button"
-												   title="裁剪">
-													<FontAwesomeIcon icon={faCut}/>
-												</a>
-											</div>
-										</div>
-									</div>
 									<div className="card-body p-0">
-										<input className="form-control" type='file' id="image" name="image" datatype="*"
-											   value={this.state.image}/>
-										<div className="info">
-											<span className="Validform_checktip">
-											</span>
-											<span className="dec">
-												<s className="dec1">&#9670;</s>
-												<s className="dec2">&#9670;</s>
-											</span>
+										<div id="uploader" className="container-fluid" style={{height: "300px"}}>
+											<div className="drop-zone h-100 d-flex align-items-center justify-content-center">
+												<div id="filePicker">
+												</div>
+												<div className="img-preview">
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
