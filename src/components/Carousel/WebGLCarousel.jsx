@@ -2,47 +2,107 @@ import React from 'react';
 import TweenMax from 'gsap';
 import * as THREE from 'three';
 import ImagesLoaded from 'imagesloaded';
-import picture1 from '../../images/Carousel/1.jpg';
-import picture2 from '../../images/Carousel/2.jpg';
-import picture3 from '../../images/Carousel/3.jpg';
-import picture4 from '../../images/Carousel/4.jpg';
-import picture5 from '../../images/Carousel/5.jpg';
-import picture6 from '../../images/Carousel/6.jpg';
 import './WebGLCarousel.css';
 
 class WebGlCarousel extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {interval: null};
+		this.state = {
+			interval: null,
+			carousel: [
+				{
+					src: '/images/Carousel/1.jpg',
+					name: '华山',
+					position: '华山',
+					location: '华阴'
+				},
+				{
+					src: '/images/Carousel/2.jpg',
+					name: '阆中古城',
+					position: '阆中古城',
+					location: '阆中'
+				},
+				{
+					src: '/images/Carousel/3.jpg',
+					name: '都江堰',
+					position: '都江堰',
+					location: '成都'
+				},
+				{
+					src: '/images/Carousel/4.jpg',
+					name: '电子科技大学',
+					position: '电子科技大学',
+					location: '成都'
+				},
+				{
+					src: '/images/Carousel/5.jpg',
+					name: '峨眉山',
+					position: '峨眉山',
+					location: '峨眉山'
+				},
+				{
+					src: '/images/Carousel/6.jpg',
+					name: '颐和园',
+					position: '颐和园',
+					location: '北京'
+				}
+			]
+		};
 	}
 
 	renderCarousel() {
 		let webGLCarouselComponent = this;
-		let displacementSlider = function displacementSlider(opts) {
-
-			let vertex = '\n        varying vec2 vUv;\n        void main() {\n          vUv = uv;\n          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n        }\n    ';
-
-			let fragment = '\n        \n        varying vec2 vUv;\n\n        uniform sampler2D currentImage;\n        uniform sampler2D nextImage;\n\n        uniform float dispFactor;\n\n        void main() {\n\n            vec2 uv = vUv;\n            vec4 _currentImage;\n            vec4 _nextImage;\n            float intensity = 0.3;\n\n            vec4 orig1 = texture2D(currentImage, uv);\n            vec4 orig2 = texture2D(nextImage, uv);\n            \n            _currentImage = texture2D(currentImage, vec2(uv.x, uv.y + dispFactor * (orig2 * intensity)));\n\n            _nextImage = texture2D(nextImage, vec2(uv.x, uv.y + (1.0 - dispFactor) * (orig1 * intensity)));\n\n            vec4 finalTexture = mix(_currentImage, _nextImage, dispFactor);\n\n            gl_FragColor = finalTexture;\n\n        }\n    ';
-
-			let images = opts.images,
-				image = void 0,
-				sliderImages = [];
-			let canvasWidth = images[0].clientWidth;
-			let canvasHeight = images[0].clientHeight;
-			let parent = opts.parent;
-
-			let renderWidth = Math.max(parent.clientWidth, window.innerWidth || 0);
-			let renderHeight = Math.max(parent.clientHeight, window.innerHeight || 0);
-
-			let renderW = void 0,
-				renderH = void 0;
-
+		let displacementSlider = function displacementSlider(options) {
+			let vertex = 'varying vec2 vUv;void main() {vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );}';
+			let fragment = 'varying vec2 vUv;uniform sampler2D currentImage;uniform sampler2D nextImage;uniform float dispFactor;void main() {vec2 uv = vUv;vec4 _currentImage;vec4 _nextImage;float intensity = 0.3;vec4 orig1 = texture2D(currentImage, uv);vec4 orig2 = texture2D(nextImage, uv);_currentImage = texture2D(currentImage, vec2(uv.x, uv.y + dispFactor * (orig2 * intensity)));_nextImage = texture2D(nextImage, vec2(uv.x, uv.y + (1.0 - dispFactor) * (orig1 * intensity)));vec4 finalTexture = mix(_currentImage, _nextImage, dispFactor);gl_FragColor = finalTexture;}';
+			//初始数据，渲染页面尺寸
+			let renderW = void 0, renderH = void 0;
+			//初始化数据，用于加载图片
+			let image = void 0;
+			//用于保存加载的图片
+			let sliderImages = [];
+			//图片列表
+			let images = options.images;
+			//第一张图片，用于渲染初始页面
+			let firstImage = images[0];
+			//容器
+			let container = options.container;
+			//页面尺寸
+			let canvasWidth = container.clientWidth;
+			let canvasHeight = container.clientHeight;
+			//添加初始图片
+			let containerHtml = '';
+			//添加初始文字
+			containerHtml = containerHtml + '<div class="slider-inner">' +
+				'<div id="slider-content">' +
+				'<div class="meta">Position</div>' +
+				'<h2 id="slide-title">' +
+				firstImage.position
+				+ '</h2>' +
+				'<div class="meta">Location</div>' +
+				'<div id="slide-status">' +
+				firstImage.location
+				+ '</div>' +
+				'</div>' +
+				'</div>';
+			//添加导航按钮
+			containerHtml = containerHtml + '<div id="pagination"></div>';
+			//添加初始化内容
+			container.innerHTML = containerHtml;
+			//导航按钮容器
+			let paginationContainer = container.querySelector('#pagination');
+			//文字容器
+			let slideTitleEl = container.querySelector('#slide-title');
+			let slideStatusEl = container.querySelector('#slide-status');
+			//页面尺寸
+			let renderWidth = Math.max(container.clientWidth, window.innerWidth || 0);
+			let renderHeight = Math.max(container.clientHeight, window.innerHeight || 0);
+			//渲染尺寸
 			if (renderWidth > canvasWidth) {
 				renderW = renderWidth;
 			} else {
 				renderW = canvasWidth;
 			}
-
 			renderH = canvasHeight;
 
 			let renderer = new THREE.WebGLRenderer({
@@ -51,18 +111,30 @@ class WebGlCarousel extends React.Component {
 
 			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setClearColor(0x23272A, 1.0);
-			renderer.setSize(renderW, renderH);
-			parent.appendChild(renderer.domElement);
+			renderer.setSize(renderW, renderH, false);
+			container.appendChild(renderer.domElement);
 
 			let loader = new THREE.TextureLoader();
 			loader.crossOrigin = "anonymous";
-
-			images.forEach(function (img) {
-				image = loader.load(img.getAttribute('src'));
+			//加载图片
+			images.forEach(function (img, index) {
+				image = loader.load(img.src);
 				image.magFilter = image.minFilter = THREE.LinearFilter;
 				image.anisotropy = renderer.capabilities.getMaxAnisotropy();
 				sliderImages.push(image);
+				//添加图片
+				let imgElement = document.createElement('img');
+				imgElement.setAttribute('alt', img.name);
+				imgElement.setAttribute('src', img.src);
+				container.appendChild(imgElement);
+				//添加导航按钮
+				let buttonElement = document.createElement('button');
+				buttonElement.setAttribute('data-slide', index.toString());
+				buttonElement.setAttribute('data-name', img.name);
+				paginationContainer.appendChild(buttonElement);
 			});
+			//设置第一个按钮类为active
+			paginationContainer.firstChild.className = 'active';
 
 			let scene = new THREE.Scene();
 			scene.background = new THREE.Color(0x23272A);
@@ -82,7 +154,7 @@ class WebGlCarousel extends React.Component {
 				opacity: 1.0
 			});
 
-			let geometry = new THREE.PlaneBufferGeometry(parent.offsetWidth, parent.offsetHeight, 1);
+			let geometry = new THREE.PlaneBufferGeometry(container.offsetWidth, container.offsetHeight, 1);
 			let object = new THREE.Mesh(geometry, mat);
 			object.position.set(0, 0, 0);
 			scene.add(object);
@@ -93,8 +165,8 @@ class WebGlCarousel extends React.Component {
 				pageIndex = slideId;
 				if (!isAnimating) {
 					isAnimating = true;
-					document.getElementById('pagination').querySelectorAll('.active')[0].className = '';
-					document.getElementById('pagination').querySelectorAll('button')[pageIndex].className = 'active';
+					paginationContainer.querySelector('.active').className = '';
+					paginationContainer.querySelectorAll('button')[pageIndex].className = 'active';
 					mat.uniforms.nextImage.value = sliderImages[slideId];
 					mat.uniforms.nextImage.needsUpdate = true;
 
@@ -109,10 +181,8 @@ class WebGlCarousel extends React.Component {
 						}
 					});
 
-					let slideTitleEl = document.getElementById('slide-title');
-					let slideStatusEl = document.getElementById('slide-status');
-					let nextSlideTitle = document.querySelectorAll('[data-slide-title="' + slideId + '"]')[0].innerHTML;
-					let nextSlideStatus = document.querySelectorAll('[data-slide-status="' + slideId + '"]')[0].innerHTML;
+					let nextSlideTitle = images[slideId]['position'];
+					let nextSlideStatus = images[slideId]['location'];
 
 					TweenMax.fromTo(slideTitleEl, 0.5, {
 						autoAlpha: 1,
@@ -158,7 +228,11 @@ class WebGlCarousel extends React.Component {
 			};
 			let pageIndex = 0;
 			let loop = function () {
-				let pagButtons = Array.from(document.getElementById('pagination').querySelectorAll('button'));
+				let existInterval = webGLCarouselComponent.state.interval;
+				if (existInterval) {
+					clearInterval(existInterval);
+				}
+				let pagButtons = Array.from(paginationContainer.querySelectorAll('button'));
 				let interval = setInterval(function () {
 					pageIndex++;
 					pageIndex = parseInt(pageIndex % pagButtons.length);
@@ -169,14 +243,12 @@ class WebGlCarousel extends React.Component {
 				});
 			};
 			let addEvents = function addEvents() {
-
-				let pagButtons = Array.from(document.getElementById('pagination').querySelectorAll('button'));
-
+				let pagButtons = Array.from(paginationContainer.querySelectorAll('button'));
 				pagButtons.forEach(function (el) {
-
 					el.addEventListener('click', function () {
 						let slideId = parseInt(this.dataset.slide, 10);
 						render(slideId);
+						loop();
 					});
 				});
 			};
@@ -198,10 +270,9 @@ class WebGlCarousel extends React.Component {
 		let sliderContainer = document.getElementById('slider');
 		let carouselImages = sliderContainer.querySelectorAll('img');
 		ImagesLoaded(carouselImages, function () {
-			let sliderImagesArray = Array.from(carouselImages);
 			new displacementSlider({
-				parent: sliderContainer,
-				images: sliderImagesArray
+				container: sliderContainer,
+				images: webGLCarouselComponent.state.carousel
 			});
 		});
 	}
@@ -215,52 +286,14 @@ class WebGlCarousel extends React.Component {
 	}
 
 	render() {
+		const imageList = this.state.carousel.map((image, key) => <img alt={image.name} src={image.src} key={key}/>);
 		return (
 			<div className="section row carousel">
 				<div className="col-md-12 col-sm-12">
 					<main>
 						<div id="slider">
-							<div className="slider-inner">
-								<div id="slider-content">
-									<div className="meta">Position</div>
-									<h2 id="slide-title">华山</h2>
-									<div className="meta">Location</div>
-									<div id="slide-status">华阴</div>
-									<span data-slide-title="0">华山</span>
-									<span data-slide-title="1">阆中古城</span>
-									<span data-slide-title="2">兴隆湖</span>
-									<span data-slide-title="3">电子科技大学</span>
-									<span data-slide-title="4">峨眉山</span>
-									<span data-slide-title="5">颐和园</span>
-									<span data-slide-status="0">华阴</span>
-									<span data-slide-status="1">阆中</span>
-									<span data-slide-status="2">成都</span>
-									<span data-slide-status="3">成都</span>
-									<span data-slide-status="4">峨眉山</span>
-									<span data-slide-status="5">北京</span>
-								</div>
-							</div>
-
-							<img alt="img1" src={picture1}/>
-							<img alt="img2" src={picture2}/>
-							<img alt="img3" src={picture3}/>
-							<img alt="img4" src={picture4}/>
-							<img alt="img5" src={picture5}/>
-							<img alt="img6" src={picture6}/>
-
-							<div id="pagination">
-								<button className="active" data-slide="0">
-								</button>
-								<button data-slide="1">
-								</button>
-								<button data-slide="2">
-								</button>
-								<button data-slide="3">
-								</button>
-								<button data-slide="4">
-								</button>
-								<button data-slide="5">
-								</button>
+							<div id="image-list">
+								{imageList}
 							</div>
 						</div>
 					</main>

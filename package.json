@@ -8,6 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
+    "bootstrap-fileinput": "^5.0.1",
     "codemirror": "^5.45.0",
     "fullpage.js": "^3.0.4",
     "gsap": "^2.1.2",
@@ -26,8 +27,7 @@
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^8.7.0",
     "three": "^0.103.0",
-    "video.js": "^7.4.1",
-    "webuploader": "^0.1.8"
+    "video.js": "^7.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

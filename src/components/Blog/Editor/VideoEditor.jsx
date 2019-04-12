@@ -8,10 +8,6 @@ import $ from "jquery";
 import {alertTypes, modalAlert} from "../../Modal/ModalAlert";
 import {mediaPlayer} from "../../MediaPlayer/MediaPlayer";
 import {fileUploader} from "../../FileUploader/FileUploader";
-import {faFileUpload} from "@fortawesome/free-solid-svg-icons/faFileUpload";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFileImport} from "@fortawesome/free-solid-svg-icons/faFileImport";
-import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons/faExpandArrowsAlt";
 
 class VideoEditor extends React.Component {
 	constructor(props) {
@@ -103,49 +99,27 @@ class VideoEditor extends React.Component {
 
 	initialisePlayer() {
 		this.mediaPlayer = mediaPlayer('video-player', {
-			language: 'zh-CN',
+			language: 'zh-cn',
+			autoplay: false,
 			controls: false,
-			src: this.state.audio,
+			src: this.state.video,
 			poster: '//vjs.zencdn.net/v/oceans.png'
+		}, function () {
+
 		});
 	}
 
 	initialiseUploader() {
 		const audioEditorComponent = this;
-		const uploader = fileUploader({
-			disableGlobalDnd: true,
-			pick: '.file-picker',
-			dnd: '.container-fluid',
-			paste: document.body,
-			// 只允许选择图片文件。
-			accept: {
-				title: 'video',
-				extensions: 'mp4',
-				mimeTypes: 'video/mp4'
-			},
-			onFileQueued: function (file) {
-				let fileInput = $('input[type="file"]');
-				console.log(fileInput.val());
-				let reader = new FileReader();
-				let playSource = reader.readAsDataURL($(''));
-				audioEditorComponent.setState({
-					audio: playSource
-				});
-			},
-			onUploadProgress: function (file, percentage) {
-
-			},
-			onUploadSuccess: function (file) {
-
-			},
-			onUploadError: function (file) {
-
-			},
-			onUploadComplete: function (file) {
-
-			}
+		fileUploader('#video', {
+			language: 'zh',
+			uploadUrl: '',
+			allowedFileExtensions: ['jpg', 'png', 'gif'],
+			showUpload: false, //是否显示上传按钮
+			showCaption: false,
+			browseClass: "btn btn-dark",
+			theme: 'fas'
 		});
-		console.log(uploader);
 	}
 
 	componentDidMount() {
@@ -192,44 +166,13 @@ class VideoEditor extends React.Component {
 						<div className="form-group">
 							<div className="col-md-12">
 								<label className="control-label" htmlFor="audio">视频</label>
-								<div className="card">
-									<div className="card-header bg-dark p-0">
-										<div className="row">
-											<div className="text-right col-md-12 operateBar">
-												<a href="javascript:void(0);"
-												   className="btn text-light file-picker"
-												   title="上传">
-													<FontAwesomeIcon icon={faFileUpload}/>
-												</a>
-												<a href="javascript:void(0);"
-												   className="btn text-light import-code-button"
-												   title="导入">
-													<FontAwesomeIcon icon={faFileImport}/>
-												</a>
-												<a href="javascript:void(0);"
-												   className="btn text-light full-screen-button"
-												   title="全屏">
-													<FontAwesomeIcon icon={faExpandArrowsAlt}/>
-												</a>
-											</div>
-										</div>
-									</div>
+								<div className="card overflow-hidden">
 									<div className="card-body p-0">
-										<div id="uploader" className="container-fluid" style={{height: "350px"}}>
-											<div className="player-content">
-												<video id="video-player" className="video-js">
-													<p className="vjs-no-js">
-														To view this video please enable JavaScript, and consider
-														upgrading to a
-														web browser that
-														<a href="http://videojs.com/html5-video-support/"
-														   target="_blank">
-															supports HTML5 video
-														</a>
-													</p>
-												</video>
-											</div>
+										<div className="player-content">
+											<video id="video-player" className="video-js">
+											</video>
 										</div>
+										<input type="file" id="video"/>
 									</div>
 								</div>
 							</div>
