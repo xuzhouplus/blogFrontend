@@ -18,11 +18,9 @@ import 'codemirror/addon/display/fullscreen.css'
 import 'codemirror/addon/scroll/simplescrollbars'
 import 'codemirror/addon/scroll/simplescrollbars.css'
 import 'codemirror/theme/idea.css';
-import AddIcon from "../../../images/Other/add.png";
 import {hideValidformError, initValidform, showValidformError} from '../../Validform/validform';
 import '../../Validform/validformStyle.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFileUpload} from "@fortawesome/free-solid-svg-icons/faFileUpload";
 import {faFileImport} from "@fortawesome/free-solid-svg-icons/faFileImport";
 import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons/faExpandArrowsAlt";
 import './CodeMirrorFullpage.css';
@@ -30,6 +28,8 @@ import {connect} from "react-redux";
 import {mapStateToProps} from "../../../redux/MapStateToProps";
 import {mapDispatchToProps} from "../../../redux/MapDispatchToProps";
 import {alertTypes, modalAlert} from "../../Modal/ModalAlert";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {faCloudUploadAlt} from "@fortawesome/free-solid-svg-icons/faCloudUploadAlt";
 
 class CodeEditor extends React.Component {
 	constructor(props) {
@@ -285,7 +285,7 @@ class CodeEditor extends React.Component {
 												<a href="javascript:void(0);"
 												   className="btn text-light upload-code-button"
 												   title="上传">
-													<FontAwesomeIcon icon={faFileUpload}/>
+													<FontAwesomeIcon icon={faCloudUploadAlt}/>
 												</a>
 												<a href="javascript:void(0);"
 												   className="btn text-light import-code-button"
@@ -347,9 +347,9 @@ class CodeEditor extends React.Component {
 												   aria-describedby="basic-addon2" value={this.state.inputTag}
 												   onChange={this.tagInputChangeEvent}/>
 											<div className="input-group-append">
-												<button className="btn btn-outline-secondary d-flex align-middle"
+												<button className="btn btn-dark d-flex align-middle"
 														type="button" onClick={this.addTagEvent}>
-													<img alt="添加" src={AddIcon} style={{width: '20px'}}/>
+													<FontAwesomeIcon icon={faPlus}/>
 												</button>
 											</div>
 										</div>

@@ -2,12 +2,10 @@ import React from 'react';
 import {connect} from "react-redux";
 import {mapStateToProps} from "../../../redux/MapStateToProps";
 import {mapDispatchToProps} from "../../../redux/MapDispatchToProps";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import AddIcon from "../../../images/Other/add.png";
 import {hideValidformError, initValidform, showValidformError} from "../../Validform/validform";
 import $ from "jquery";
 import {alertTypes, modalAlert} from "../../Modal/ModalAlert";
-import {faCut} from "@fortawesome/free-solid-svg-icons";
 import {fileUploader} from "../../FileUploader/FileUploader";
 
 class ImageEditor extends React.Component {
@@ -99,44 +97,63 @@ class ImageEditor extends React.Component {
 	}
 
 	initialiseImageUploader() {
-		const uploader = fileUploader({
-			disableGlobalDnd: true,
-			pick: {
-				id: '#filePicker',
-				innerHTML:'点击按钮选择图片'
+		fileUploader('#upload-image-input', {
+			language: 'zh',
+			uploadUrl: '',
+			allowedFileExtensions: ['jpg', 'png'],
+			showUpload: false, //是否显示上传按钮
+			showCaption: false,
+			showCancel: false,
+			showClose: false,
+			minFileCount: 1,
+			maxFileCount: 1,
+			maxFileSize: 20 * 1024,
+			autoReplace: false,
+			browseLabel: '',
+			browseIcon: '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-upload-alt" class="svg-inline--fa fa-cloud-upload-alt fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4zM393.4 288H328v112c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V288h-65.4c-14.3 0-21.4-17.2-11.3-27.3l105.4-105.4c6.2-6.2 16.4-6.2 22.6 0l105.4 105.4c10.1 10.1 2.9 27.3-11.3 27.3z"></path></svg>',
+			theme: 'explorer-fas',
+			required: true,
+			layoutTemplates: {
+				main1: '<div class="card">' +
+					'<div class="card-header">' +
+					'' +
+					'</div>' +
+					'<div class="card-body">' +
+					'{preview}' +
+					'<div class="kv-upload-progress hide"></div>' +
+					'{remove}{cancel}{upload}{browse}' +
+					'</div>' +
+					'</div>',
+				main2: '<div class="card">' +
+					'<div class="card-header  bg-dark p-0">' +
+					'<div class="row">' +
+					'<div class="text-right col-md-12 operateBar">' +
+					'{browse}' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'<div class="card-body p-0">' +
+					'{preview}' +
+					'<div class="kv-upload-progress hide"></div>' +
+					'</div>' +
+					'</div>',
+				preview: '<div class="file-preview {class}">' +
+					'<div class="file-preview-thumbnails">' +
+					'</div>' +
+					'</div>'
 			},
-			dnd: '#uploader .drop-zone',
-			paste: document.body,
-			// 只允许选择图片文件。
-			accept: {
-				title: 'Images',
-				extensions: 'gif,jpg,jpeg,bmp,png',
-				mimeTypes: 'image/*'
+			previewClass: 'file-image d-block p-0',
+			previewSettings: {
+				image: {width: '100%'}
 			},
-			onFileQueued: function (file) {
-				uploader.makeThumb(file, function (error, ret) {
-					if (error) {
-						$('.img-preview').text('预览错误');
-					} else {
-						$('#filePicker').hide();
-						$('.img-preview').append('<img alt="" src="' + ret + '" />');
-					}
-				});
-			},
-			onUploadProgress: function (file, percentage) {
-
-			},
-			onUploadSuccess: function (file) {
-
-			},
-			onUploadError: function (file) {
-
-			},
-			onUploadComplete: function (file) {
-
+			previewTemplates: {
+				image: '<div class="file-preview-frame" id="{previewId}" data-fileindex="{fileindex}" data-template="{template}" title="{caption}">' +
+					'<div class="kv-file-content">' +
+					'<img class="kv-preview-data file-preview-image" src="{data}" type="{type}" {style}/>' +
+					'</div>' +
+					'</div>'
 			}
 		});
-		console.log(uploader);
 	}
 
 	componentDidMount() {
@@ -175,19 +192,8 @@ class ImageEditor extends React.Component {
 						</div>
 						<div className="form-group">
 							<div className="col-md-12">
-								<label className="control-label" htmlFor="code">图片</label>
-								<div className="card">
-									<div className="card-body p-0">
-										<div id="uploader" className="container-fluid" style={{height: "300px"}}>
-											<div className="drop-zone h-100 d-flex align-items-center justify-content-center">
-												<div id="filePicker">
-												</div>
-												<div className="img-preview">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<label className="control-label" htmlFor="upload-image-input">图片</label>
+								<input type="file" id="upload-image-input" className="btn btn-dark" title="上传"/>
 							</div>
 						</div>
 						<div className="form-group">

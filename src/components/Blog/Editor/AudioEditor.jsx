@@ -106,47 +106,68 @@ class AudioEditor extends React.Component {
 	}
 
 	initialiseUploader() {
-		const audioEditorComponent = this;
-		const uploader = fileUploader({
-			disableGlobalDnd: true,
-			pick: {
-				id: '#filePicker',
-				innerHTML: '点击按钮选择音频'
+		fileUploader('#upload-audio-input', {
+			language: 'zh',
+			uploadUrl: '',
+			allowedFileExtensions: ['mp3'],
+			showUpload: false, //是否显示上传按钮
+			showCaption: false,
+			showCancel: false,
+			showClose: false,
+			minFileCount: 1,
+			maxFileCount: 1,
+			maxFileSize: 20*1024,
+			autoReplace: false,
+			browseLabel: '',
+			browseIcon: '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-upload-alt" class="svg-inline--fa fa-cloud-upload-alt fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7.1 5.4.2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4zM393.4 288H328v112c0 8.8-7.2 16-16 16h-48c-8.8 0-16-7.2-16-16V288h-65.4c-14.3 0-21.4-17.2-11.3-27.3l105.4-105.4c6.2-6.2 16.4-6.2 22.6 0l105.4 105.4c10.1 10.1 2.9 27.3-11.3 27.3z"></path></svg>',
+			theme: 'explorer-fas',
+			required: true,
+			layoutTemplates: {
+				main1: '<div class="card">' +
+					'<div class="card-header">' +
+					'' +
+					'</div>' +
+					'<div class="card-body">' +
+					'{preview}' +
+					'<div class="kv-upload-progress hide"></div>' +
+					'{remove}{cancel}{upload}{browse}' +
+					'</div>' +
+					'</div>',
+				main2: '<div class="card">' +
+					'<div class="card-header  bg-dark p-0">' +
+					'<div class="row">' +
+					'<div class="text-right col-md-12 operateBar">' +
+					'{browse}' +
+					'</div>' +
+					'</div>' +
+					'</div>' +
+					'<div class="card-body p-0">' +
+					'{preview}' +
+					'<div class="kv-upload-progress hide"></div>' +
+					'</div>' +
+					'</div>',
+				preview: '<div class="file-preview {class}">' +
+					'<div class="file-preview-thumbnails">' +
+					'</div>' +
+					'</div>'
 			},
-			dnd: '#uploader .drop-zone',
-			paste: document.body,
-			// 只允许选择图片文件。
-			accept: {
-				title: 'audio',
-				extensions: 'mp3',
-				mimeTypes: 'audio/*'
+			previewClass: 'file-audio d-block p-0',
+			previewSettings: {
+				audio: {width: '100%'}
 			},
-			onFileQueued: function (file) {
-
-				let reader = new FileReader();
-				let playSource = reader.readAsDataURL($(''));
-				audioEditorComponent.setState({
-					audio: playSource
-				});
-			},
-			onUploadProgress: function (file, percentage) {
-
-			},
-			onUploadSuccess: function (file) {
-
-			},
-			onUploadError: function (file) {
-
-			},
-			onUploadComplete: function (file) {
-
+			previewTemplates: {
+				audio: '<div class="file-preview-frame" id="{previewId}" data-fileindex="{fileindex}" data-template="{template}" title="{caption}">' +
+					'   <div class="kv-file-content">' +
+					'       <audio class="kv-preview-data file-preview-audio" controls {style}>' +
+					'           <source src="{data}" type="{type}">' +
+					'       </audio>' +
+					'   </div>' +
+					'</div>'
 			}
 		});
-		console.log(uploader);
 	}
 
 	componentDidMount() {
-		this.initialisePlayer();
 		this.initialiseUploader();
 		this.initialiseValidform($('form'));
 	}
@@ -188,37 +209,8 @@ class AudioEditor extends React.Component {
 						</div>
 						<div className="form-group">
 							<div className="col-md-12">
-								<label className="control-label" htmlFor="audio">音频</label>
-								<div className="card">
-									<div className="card-body p-0">
-										<div id="uploader" className="container-fluid" style={{height: "350px"}}>
-											<div
-												className="drop-zone h-100 d-flex align-items-center justify-content-center">
-												<div id="filePicker">
-												</div>
-												<div className="player-content">
-													<video
-														id="audio-player"
-														className="video-js"
-														controls
-														preload="auto"
-														poster="//vjs.zencdn.net/v/oceans.png"
-														data-setup='{}'>
-														<p className="vjs-no-js">
-															To view this video please enable JavaScript, and consider
-															upgrading to a
-															web browser that
-															<a href="http://videojs.com/html5-video-support/"
-															   target="_blank">
-																supports HTML5 video
-															</a>
-														</p>
-													</video>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<label className="control-label" htmlFor="upload-audio-input">音频</label>
+								<input type="file" id="upload-audio-input" className="btn btn-dark" title="上传"/>
 							</div>
 						</div>
 						<div className="form-group">

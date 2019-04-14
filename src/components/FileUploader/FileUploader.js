@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import 'bootstrap-fileinput/js/fileinput';
-import 'bootstrap-fileinput/themes/explorer-fas/theme.css';
+import 'bootstrap-fileinput';
 import 'bootstrap-fileinput/css/fileinput.css'
+import 'bootstrap-fileinput/themes/explorer-fas/theme.css';
 import './FileUploader.css';
 
 /**
@@ -15,8 +15,11 @@ export function fileUploader(picker, options) {
 		showUpload: false, //是否显示上传按钮
 		showCaption: false,
 		browseClass: "btn btn-dark",
-		theme: 'fas'
+		theme: 'fas',
+		dropZoneEnabled: false,
+		browseLabel: '选择附件',                            // 浏览按钮内容
+		showRemove: false,
 	};
-	const mergeOptions = $.extend(defaultOptions, options);
+	const mergeOptions = $.extend({}, defaultOptions, options);
 	$(picker).fileinput(mergeOptions);
 }
