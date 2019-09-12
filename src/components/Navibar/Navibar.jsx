@@ -5,8 +5,12 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 
 class Navibar extends React.Component {
+	constructor(props){
+		super(props);
+		this.loggedIn = (JSON.stringify(this.props.user) === '{}');
+	}
+
 	render() {
-		const isLogin = (JSON.stringify(this.props.user) === '{}');
 		return (
 			<nav className="top-bar navbar-expand-lg navbar navbar-dark bg-dark fixed-top" role="navigation">
 				<NavLink to="/" className="navbar-brand">
@@ -27,7 +31,7 @@ class Navibar extends React.Component {
 								Home
 							</NavLink>
 						</li>
-						<li className="nav-item dropdown article" hidden={isLogin}>
+						<li className="nav-item dropdown article" hidden={this.loggedIn}>
 							<NavLink className="nav-link dropdown-toggle" to="/blog" id="navbarDropdown" role="button"
 									 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								文章
@@ -44,7 +48,7 @@ class Navibar extends React.Component {
 								</NavLink>
 							</div>
 						</li>
-						<li className="nav-item dropdown article" hidden={!isLogin}>
+						<li className="nav-item dropdown article" hidden={!this.loggedIn}>
 							<NavLink to="/blog" className="nav-link">
 								文章
 							</NavLink>
@@ -54,7 +58,7 @@ class Navibar extends React.Component {
 						{/*激活*/}
 						{/*</NavLink>*/}
 						{/*</li>*/}
-						<li className="nav-item login" hidden={this.props.user}>
+						<li className="nav-item login" hidden={!this.loggedIn}>
 							<NavLink to="/login" className="nav-link">
 								登录
 							</NavLink>

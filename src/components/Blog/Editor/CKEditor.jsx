@@ -42,7 +42,7 @@ ClassicEditor.defaultConfig = {
 			'imageTextAlternative'
 		]
 	},
-	// This value must be kept in sync with the language defined in webpack.config.js.
+	// This value must be kept in sync with the language defined in webpack.configs.js.
 	language: 'zh-cn'
 };
 

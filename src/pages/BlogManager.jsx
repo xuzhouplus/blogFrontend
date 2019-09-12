@@ -42,6 +42,10 @@ class BlogManager extends React.Component {
 		this.sectionType = 'article';
 	}
 
+	componentDidMount() {
+
+	}
+
 	render() {
 		let EditorComponent;
 		switch (this.sectionType) {

@@ -1,17 +1,37 @@
 import React, {Component} from 'react';
 
-import About from './components/About/About';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './pages/Home';
-import Navibar from "./components/Navibar/Navibar";
-import BlogList from "./pages/BlogList";
-import Login from "./pages/Login";
-import BlogManager from './pages/BlogManager'
-import BlogEditor from "./pages/BlogEditor";
+import Navibar from './components/Navibar/Navibar';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Loadable from "react-loadable";
+import Loading from "./components/Loading/Loading";
 
 class App extends Component {
 	render() {
+		const Home = Loadable({
+			loader: () => import('./pages/Home'),
+			loading: Loading
+		});
+		const BlogList = Loadable({
+			loader: () => import('./pages/BlogList'),
+			loading: Loading
+		});
+		const BlogManager = Loadable({
+			loader: () => import('./pages/BlogManager'),
+			loading: Loading
+		});
+		const BlogEditor = Loadable({
+			loader: () => import('./pages/BlogEditor'),
+			loading: Loading
+		});
+		const About = Loadable({
+			loader: () => import('./components/About/About'),
+			loading: Loading
+		});
+		const Login = Loadable({
+			loader: () => import('./pages/Login'),
+			loading: Loading
+		});
 		return (
 			<Router>
 				<Navibar/>
