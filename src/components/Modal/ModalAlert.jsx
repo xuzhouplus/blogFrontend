@@ -1,4 +1,4 @@
-import * as Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 export const alertTypes = {warning: 'warning', error: 'error', success: 'success', info: 'info', question: 'question'};
 export const modalAlert = (options, style = {}) => {

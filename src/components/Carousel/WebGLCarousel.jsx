@@ -11,37 +11,43 @@ class WebGlCarousel extends React.Component {
 			interval: null,
 			carousel: [
 				{
-					src: '/images/Carousel/1.jpg',
+					src: '/images/Carousel/bipenggou.jpg',
+					name: '毕棚沟',
+					position: '毕棚沟',
+					location: '理县'
+				},
+				{
+					src: '/images/Carousel/huashan.jpg',
 					name: '华山',
 					position: '华山',
 					location: '华阴'
 				},
 				{
-					src: '/images/Carousel/2.jpg',
+					src: '/images/Carousel/langzhonggucheng.jpg',
 					name: '阆中古城',
 					position: '阆中古城',
 					location: '阆中'
 				},
 				{
-					src: '/images/Carousel/3.jpg',
+					src: '/images/Carousel/dujiangyan.jpg',
 					name: '都江堰',
 					position: '都江堰',
 					location: '成都'
 				},
 				{
-					src: '/images/Carousel/4.jpg',
+					src: '/images/Carousel/uestc.jpg',
 					name: '电子科技大学',
 					position: '电子科技大学',
 					location: '成都'
 				},
 				{
-					src: '/images/Carousel/5.jpg',
+					src: '/images/Carousel/emeishan.jpg',
 					name: '峨眉山',
 					position: '峨眉山',
 					location: '峨眉山'
 				},
 				{
-					src: '/images/Carousel/6.jpg',
+					src: '/images/Carousel/yiheyuan.jpg',
 					name: '颐和园',
 					position: '颐和园',
 					location: '北京'

@@ -14,7 +14,7 @@ class ArticleEditor extends React.Component {
 		this.state = {
 			id: '',
 			title: '示例代码',
-			subTitle: '副标题',
+			subtitle: '副标题',
 			section: [{
 				type:'code',
 				code:'console.log(\'asdas\');'
@@ -138,9 +138,9 @@ class ArticleEditor extends React.Component {
 						</div>
 						<div className="form-group">
 							<div className="col-md-12">
-								<label className="control-label" htmlFor="name">副标题</label>
-								<input className="form-control" name="name" type="text" datatype="s1-20"
-									   defaultValue={this.state.subTitle}/>
+								<label className="control-label" htmlFor="subtitle">副标题</label>
+								<input className="form-control" name="subtitle" type="text" datatype="s1-20"
+									   defaultValue={this.state.subtitle}/>
 								<div className="info">
 									<span className="Validform_checktip"></span>
 									<span className="dec">

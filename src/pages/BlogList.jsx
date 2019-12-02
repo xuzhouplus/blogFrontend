@@ -3,6 +3,9 @@ import Masonry from 'masonry-layout';
 import BlogComponent from '../components/Blog/BlogBox';
 import './BlogList.css';
 import ImagesLoaded from "imagesloaded";
+import {modalPage} from '../components/Modal/ModalPage';
+import Loadable from "react-loadable";
+import Loading from "../components/Loading/Loading";
 
 class BlogList extends React.Component {
     constructor(props) {
@@ -54,6 +57,23 @@ class BlogList extends React.Component {
             }
         ];
         this.blog = blog;
+        this.boxClickHandler = this.boxClickHandler.bind(this);
+        this.BlogPage = Loadable({
+            loader: () => import('../components/Blog/BlogPage'),
+            loading: Loading
+        });
+    }
+
+    boxClickHandler(data, event) {
+        let BlogPage = this.BlogPage;
+        modalPage({
+            html: <BlogPage id={data.id}/>,
+            showCloseButton: true,
+            showConfirmButton: false,
+            width: '100%'
+        }).then(r => {
+            console.log(r);
+        })
     }
 
     componentDidMount() {
@@ -72,7 +92,8 @@ class BlogList extends React.Component {
 
 
     render() {
-        const itemList = this.blog.map((item) => <BlogComponent data={item} key={item.id}/>)
+        const itemList = this.blog.map((item) => <BlogComponent data={item} key={item.id}
+                                                                onClick={this.boxClickHandler}/>)
         return (
             <div className="container-body container blog-content">
                 <div className="grid">
