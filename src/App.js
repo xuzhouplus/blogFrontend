@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route, Switch} from 'react-router-dom';
 import Navibar from './components/Navibar/Navibar';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Loadable from "react-loadable";
@@ -45,6 +45,13 @@ class App extends Component {
 					<Route path="/about" component={About}/>
 					<Route path="/login" component={Login}/>
 				</Switch>
+				<div className="row justify-content-center fixed-bottom navbar navbar-dark bg-dark">
+					<ul className="navbar-nav">
+						<li className="nav-item home">
+							<a href="http://www.beian.miit.gov.cn/" target="_blank" className="nav-link">蜀ICP备18021274号</a>
+						</li>
+					</ul>
+				</div>
 			</Router>
 		);
 	}
