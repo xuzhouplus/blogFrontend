@@ -15,8 +15,8 @@ class Navibar extends React.Component {
 			<nav className="top-bar navbar-expand-lg navbar navbar-dark bg-dark fixed-top" role="navigation">
 				<NavLink to="/" className="navbar-brand">
 					<span className="logo-container">
-							<img alt="logo" src={Logo}/>
-						</span>
+							<img className="App-logo" alt="logo" src={Logo}/>
+					</span>
 					<span className="logo-text">xuzhouplus.com.cn</span>
 				</NavLink>
 				<button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -28,7 +28,7 @@ class Navibar extends React.Component {
 					<ul className="navbar-nav">
 						<li className="nav-item home">
 							<NavLink to="/home" className="nav-link">
-								Home
+								主页
 							</NavLink>
 						</li>
 						<li className="nav-item dropdown article" hidden={this.loggedIn}>

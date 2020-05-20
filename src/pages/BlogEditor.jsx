@@ -86,7 +86,7 @@ class BlogEditor extends React.Component {
 				});
 		}
 		return (
-			<div className="container-body container blog-content">
+			<div className="blog-content">
 				<div className="row justify-content-center">
 					<div className="col col-3">
 						<SectionType sectionTypes={this.sectionTypes} active={this.props.match.params.type}/>

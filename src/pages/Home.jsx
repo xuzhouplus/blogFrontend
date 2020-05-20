@@ -19,7 +19,7 @@ class Home extends React.Component {
 
 	render() {
 		return (
-			<div className="container-body container-fluid content">
+			<div className="home-content">
 				<WebGLCarousel/>
 			</div>
 		);

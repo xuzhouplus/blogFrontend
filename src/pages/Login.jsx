@@ -4,7 +4,7 @@ import LoginComponent from '../components/Login/Login';
 class Login extends React.Component {
 	render() {
 		return (
-			<div className="container-body container login-content">
+			<div className="login-content">
 				<LoginComponent/>
 			</div>
 		);
