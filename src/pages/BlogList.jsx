@@ -66,11 +66,15 @@ class BlogList extends React.Component {
 
     boxClickHandler(data, event) {
         let BlogPage = this.BlogPage;
+        let width = 20;
+        if (data.width) {
+            width = width * data.width;
+        }
         modalPage({
             html: <BlogPage id={data.id}/>,
-            showCloseButton: true,
+            showCloseButton: false,
             showConfirmButton: false,
-            width: '100%'
+            width: width + '%'
         }).then(r => {
             console.log(r);
         })

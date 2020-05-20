@@ -292,14 +292,12 @@ class WebGlCarousel extends React.Component {
 	}
 
 	render() {
-		const imageList = this.state.carousel.map((image, key) => <img alt={image.name} src={image.src} key={key}/>);
 		return (
 			<div className="section row carousel">
 				<div className="col-md-12 col-sm-12">
 					<main>
 						<div id="slider">
 							<div id="image-list">
-								{imageList}
 							</div>
 						</div>
 					</main>
