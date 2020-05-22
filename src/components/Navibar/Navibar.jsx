@@ -68,6 +68,11 @@ class Navibar extends React.Component {
 						{/*注册*/}
 						{/*</NavLink>*/}
 						{/*</li>*/}
+						<li className="nav-item about">
+							<NavLink to="/about" className="nav-link">
+								关于
+							</NavLink>
+						</li>
 					</ul>
 				</div>
 			</nav>
