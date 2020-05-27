@@ -4,7 +4,7 @@ import './About.css'
 class About extends React.Component {
 	render() {
 		return (
-			<div className="section row  justify-content-center about">
+			<div className="section container-fluid justify-content-center h-100 about">
 				<div className="row align-items-center justify-content-md-center note-info">
 					<div className="col col-4">
 						<h3>
@@ -13,7 +13,7 @@ class About extends React.Component {
 						</h3>
 					</div>
 				</div>
-				<div className="container-fluid fixed-bottom border-top pt-2 pb-2 base-on">
+				<div className="container-fluid fixed-bottom border-top pt-2 pb-2 based-on">
 					<div className="row justify-content-center">
 						<div className="col col-auto">
 							<a href="https://reactjs.org/">

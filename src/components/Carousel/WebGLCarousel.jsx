@@ -98,7 +98,6 @@ class WebGlCarousel extends React.Component {
 			//页面尺寸
 			let renderWidth = container.clientWidth;
 			let renderHeight = container.clientHeight;
-			console.log(renderHeight)
 			let renderer = new THREE.WebGLRenderer({
 				antialias: false
 			});

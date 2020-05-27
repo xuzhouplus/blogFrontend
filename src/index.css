@@ -8,6 +8,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.bg-classic-blue {
+	background-color: #0f4c81 !important;
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 	monospace;
