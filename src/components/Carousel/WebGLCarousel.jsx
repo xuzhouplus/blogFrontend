@@ -59,18 +59,18 @@ class WebGlCarousel extends React.Component {
 	renderCarousel() {
 		let webGLCarouselComponent = this;
 		let displacementSlider = function displacementSlider(options) {
-			let vertex = 'varying vec2 vUv;void main() {vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );}';
-			let fragment = 'varying vec2 vUv;uniform sampler2D currentImage;uniform sampler2D nextImage;uniform float dispFactor;void main() {vec2 uv = vUv;vec4 _currentImage;vec4 _nextImage;float intensity = 0.3;vec4 orig1 = texture2D(currentImage, uv);vec4 orig2 = texture2D(nextImage, uv);_currentImage = texture2D(currentImage, vec2(uv.x, uv.y + dispFactor * (orig2 * intensity)));_nextImage = texture2D(nextImage, vec2(uv.x, uv.y + (1.0 - dispFactor) * (orig1 * intensity)));vec4 finalTexture = mix(_currentImage, _nextImage, dispFactor);gl_FragColor = finalTexture;}';
+			const vertex = 'varying vec2 vUv;void main() {vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );}';
+			const fragment = 'varying vec2 vUv;uniform sampler2D currentImage;uniform sampler2D nextImage;uniform float dispFactor;void main() {vec2 uv = vUv;vec4 _currentImage;vec4 _nextImage;float intensity = 0.3;vec4 orig1 = texture2D(currentImage, uv);vec4 orig2 = texture2D(nextImage, uv);_currentImage = texture2D(currentImage, vec2(uv.x, uv.y + dispFactor * (orig2 * intensity)));_nextImage = texture2D(nextImage, vec2(uv.x, uv.y + (1.0 - dispFactor) * (orig1 * intensity)));vec4 finalTexture = mix(_currentImage, _nextImage, dispFactor);gl_FragColor = finalTexture;}';
 			//初始化数据，用于加载图片
-			let image = 0;
+			let image = null;
 			//用于保存加载的图片
-			let sliderImages = [];
+			const sliderImages = [];
 			//图片列表
-			let images = options.images;
+			const images = options.images;
 			//第一张图片，用于渲染初始页面
-			let firstImage = images[0];
+			const firstImage = images[0];
 			//容器
-			let container = options.container;
+			const container = options.container;
 			//添加初始图片
 			let containerHtml = '';
 			//添加初始文字
@@ -91,14 +91,14 @@ class WebGlCarousel extends React.Component {
 			//添加初始化内容
 			container.innerHTML = containerHtml;
 			//导航按钮容器
-			let paginationContainer = container.querySelector('#pagination');
+			const paginationContainer = container.querySelector('#pagination');
 			//文字容器
-			let slideTitleEl = container.querySelector('#slide-title');
-			let slideStatusEl = container.querySelector('#slide-status');
+			const slideTitleEl = container.querySelector('#slide-title');
+			const slideStatusEl = container.querySelector('#slide-status');
 			//页面尺寸
-			let renderWidth = container.clientWidth;
-			let renderHeight = container.clientHeight;
-			let renderer = new THREE.WebGLRenderer({
+			const renderWidth = container.clientWidth;
+			const renderHeight = container.clientHeight;
+			const renderer = new THREE.WebGLRenderer({
 				antialias: false
 			});
 
@@ -107,7 +107,7 @@ class WebGlCarousel extends React.Component {
 			renderer.setSize(renderWidth, renderHeight, false);
 			container.appendChild(renderer.domElement);
 
-			let loader = new THREE.TextureLoader();
+			const loader = new THREE.TextureLoader();
 			loader.crossOrigin = "anonymous";
 			//加载图片
 			images.forEach(function (img, index) {
@@ -123,14 +123,15 @@ class WebGlCarousel extends React.Component {
 			});
 			//设置第一个按钮类为active
 			paginationContainer.firstChild.className = 'active';
-
-			let scene = new THREE.Scene();
+			//导航按钮列表
+			const paginateButtons =  Array.from(paginationContainer.querySelectorAll('button'));
+			const scene = new THREE.Scene();
 			scene.background = new THREE.Color(0x23272A);
-			let camera = new THREE.OrthographicCamera(renderWidth / -2, renderWidth / 2, renderHeight / 2, renderHeight / -2, 1, 1000);
+			const camera = new THREE.OrthographicCamera(renderWidth / -2, renderWidth / 2, renderHeight / 2, renderHeight / -2, 1, 1000);
 
 			camera.position.z = 1;
 
-			let mat = new THREE.ShaderMaterial({
+			const mat = new THREE.ShaderMaterial({
 				uniforms: {
 					dispFactor: {type: "f", value: 0.0},
 					currentImage: {type: "t", value: sliderImages[0]},
@@ -142,14 +143,14 @@ class WebGlCarousel extends React.Component {
 				opacity: 1.0
 			});
 
-			let geometry = new THREE.PlaneBufferGeometry(container.offsetWidth, container.offsetHeight, 1);
-			let object = new THREE.Mesh(geometry, mat);
+			const geometry = new THREE.PlaneBufferGeometry(container.offsetWidth, container.offsetHeight, 1);
+			const object = new THREE.Mesh(geometry, mat);
 			object.position.set(0, 0, 0);
 			scene.add(object);
 
 			let isAnimating = false;
 
-			let render = function (slideId) {
+			const render = function (slideId) {
 				pageIndex = slideId;
 				if (!isAnimating) {
 					isAnimating = true;
@@ -215,28 +216,27 @@ class WebGlCarousel extends React.Component {
 				}
 			};
 			let pageIndex = 0;
-			let loop = function () {
+			const loop = function () {
 				let existInterval = webGLCarouselComponent.state.interval;
 				if (existInterval) {
 					clearInterval(existInterval);
 				}
-				let pagButtons = Array.from(paginationContainer.querySelectorAll('button'));
 				let interval = setInterval(function () {
 					pageIndex++;
-					pageIndex = parseInt(pageIndex % pagButtons.length);
+					pageIndex = parseInt(pageIndex % paginateButtons.length);
 					render(pageIndex);
 				}, 5000);
 				webGLCarouselComponent.setState({
 					interval: interval
 				});
 			};
-			let addEvents = function addEvents() {
+			const addEvents = function addEvents() {
 				let pagButtons = Array.from(paginationContainer.querySelectorAll('button'));
 				pagButtons.forEach(function (el) {
 					el.addEventListener('click', function () {
 						let slideId = parseInt(this.dataset.slide, 10);
 						render(slideId);
-						loop();
+						// loop();
 					});
 				});
 			};
@@ -247,12 +247,20 @@ class WebGlCarousel extends React.Component {
 				renderer.setSize(renderWidth, renderHeight);
 			});
 
-			let animate = function animate() {
+			const animate = function animate() {
 				requestAnimationFrame(animate);
 				renderer.render(scene, camera);
 			};
+			const colorReverse = function (oldColor) {
+				oldColor = '0x' + oldColor.replace(/#/g, '');
+				let str = '000000' + (0xFFFFFF - oldColor).toString(16);
+				return str.substring(str.length - 6, str.length);
+			}
+			const getButtonsInfo = function () {
+
+			};
 			animate();
-			loop();
+			// loop();
 		};
 
 		let sliderContainer = document.getElementById('slider');
