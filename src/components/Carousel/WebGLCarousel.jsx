@@ -11,6 +11,12 @@ class WebGlCarousel extends React.Component {
 			interval: null,
 			carousel: [
 				{
+					src: '/images/Carousel/jianmenguan.jpg',
+					name: '剑门关',
+					position: '剑门关',
+					location: '剑阁'
+				},
+				{
 					src: '/images/Carousel/bipenggou.jpg',
 					name: '毕棚沟',
 					position: '毕棚沟',
@@ -236,7 +242,7 @@ class WebGlCarousel extends React.Component {
 					el.addEventListener('click', function () {
 						let slideId = parseInt(this.dataset.slide, 10);
 						render(slideId);
-						// loop();
+						loop();
 					});
 				});
 			};
@@ -260,7 +266,7 @@ class WebGlCarousel extends React.Component {
 
 			};
 			animate();
-			// loop();
+			loop();
 		};
 
 		let sliderContainer = document.getElementById('slider');
