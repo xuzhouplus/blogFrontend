@@ -11,6 +11,12 @@ class WebGlCarousel extends React.Component {
 			interval: null,
 			carousel: [
 				{
+					src: '/images/Carousel/jianmenguan.jpg',
+					name: '剑门关',
+					position: '剑门关',
+					location: '剑阁'
+				},
+				{
 					src: '/images/Carousel/bipenggou.jpg',
 					name: '毕棚沟',
 					position: '毕棚沟',
