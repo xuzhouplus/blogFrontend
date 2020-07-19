@@ -31,14 +31,15 @@
 
 #slider-content {
 	padding: 10px;
-	background-color: black;
-	opacity: 0.6;
+	color: #F8F8F8;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #666666;
+	opacity: 0.8;
 }
 
 #slider-content #slide-title {
 	font-size: 50px;
 	letter-spacing: -1px;
-	color: white;
 	line-height: 50px;
 	margin: 20px 0 30px;
 }
@@ -48,29 +49,22 @@
 	font-family: 'Arial', sans-serif;
 	font-size: 11px;
 	letter-spacing: 5px;
-	color: #88888a;
 	text-transform: uppercase;
 	position: relative;
 }
 
-@media screen and (min-width: 800px) {
-	#slider-content .meta {
-		font-size: 13px;
-	}
+#slider-content .meta {
+	font-size: 25px;
 }
 
 #slider-content #slide-status {
 	margin-top: 10px;
-	font-family: 'acta-display', serif;
 	font-weight: 400;
-	font-size: 18px;
-	color: white;
+	font-size: 30px;
 }
 
-@media screen and (min-width: 800px) {
-	#slider-content #slide-status {
-		font-size: 34px;
-	}
+#slider-content #slide-status {
+	font-size: 40px;
 }
 
 #pagination {
@@ -88,9 +82,9 @@
 	appearance: none;
 	width: 16px;
 	height: 16px;
-	background-color: #FFFFFF;
+	background-color: #F8F8F8;
 	border-radius: 100%;
-	border: 1px solid rgb(255, 255, 255);
+	border: 1px solid #666666;
 	padding: 0;
 	margin: 30px 0;
 	cursor: pointer;
@@ -101,7 +95,7 @@
 }
 
 #pagination button:hover {
-	opacity: 0.5;
+	opacity: 0.8;
 }
 
 #pagination button.active {
@@ -109,8 +103,8 @@
 }
 
 #pagination button.active:before {
-	width: 300%;
-	height: 300%;
+	width: 48px;
+	height: 48px;
 	opacity: 0.8;
 }
 
@@ -121,10 +115,31 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 100%;
-	height: 100%;
+	width: 16px;
+	height: 16px;
 	border-radius: 100%;
-	border: 1px solid rgb(255, 255, 255);
+	border: 1px solid #F8F8F8;
+	opacity: 0.2;
+	transition: opacity 0.4s ease-in-out, width 0.4s ease-in-out, height 0.4s ease-in-out;
+}
+
+#pagination button.active:after {
+	width: 50px;
+	height: 50px;
+	opacity: 0.8;
+}
+
+#pagination button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 18px;
+	height: 18px;
+	border-radius: 100%;
+	border: 1px solid #666666;
 	opacity: 0.2;
 	transition: opacity 0.4s ease-in-out, width 0.4s ease-in-out, height 0.4s ease-in-out;
 }

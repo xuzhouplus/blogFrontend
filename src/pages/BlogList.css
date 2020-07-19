@@ -1,28 +1,36 @@
 .grid {
-    margin: 0 auto;
+	margin: 0 auto;
 }
 
 .grid-item {
-    margin-bottom: 20px;
-    cursor: pointer;
+	margin-bottom: 20px;
+	cursor: pointer;
 }
 
 .grid-sizer, .grid-item {
-    width: 20%;
+	width: 20%;
 }
 
 .grid-item--width2 {
-    width: 40%;
+	width: 40%;
 }
 
 .grid-item--width3 {
-    width: 60%;
+	width: 60%;
 }
 
 .grid-item--width4 {
-    width: 80%;
+	width: 80%;
 }
 
 .grid-item--width5 {
-    width: 100%;
+	width: 100%;
+}
+
+.blog-content {
+	margin: 10px auto;
+}
+
+.container-fluid.container-body {
+	overflow: auto;
 }

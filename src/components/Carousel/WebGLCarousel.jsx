@@ -76,11 +76,11 @@ class WebGlCarousel extends React.Component {
 			//添加初始文字
 			containerHtml = containerHtml + '<div class="slider-inner">' +
 				'<div id="slider-content">' +
-				'<div class="meta">Position</div>' +
-				'<h2 id="slide-title">' +
+				// '<div class="meta">Position</div>' +
+				'<h2><div id="slide-title">' +
 				firstImage.position
-				+ '</h2>' +
-				'<div class="meta">Location</div>' +
+				+ '</div></h2>' +
+				// '<div class="meta">Location</div>' +
 				'<div id="slide-status">' +
 				firstImage.location
 				+ '</div>' +
@@ -123,8 +123,7 @@ class WebGlCarousel extends React.Component {
 			});
 			//设置第一个按钮类为active
 			paginationContainer.firstChild.className = 'active';
-			//导航按钮列表
-			const paginateButtons =  Array.from(paginationContainer.querySelectorAll('button'));
+
 			const scene = new THREE.Scene();
 			scene.background = new THREE.Color(0x23272A);
 			const camera = new THREE.OrthographicCamera(renderWidth / -2, renderWidth / 2, renderHeight / 2, renderHeight / -2, 1, 1000);
@@ -184,7 +183,6 @@ class WebGlCarousel extends React.Component {
 						ease: 'Expo.easeIn',
 						onComplete: function onComplete() {
 							slideTitleEl.innerHTML = nextSlideTitle;
-
 							TweenMax.to(slideTitleEl, 0.5, {
 								autoAlpha: 1,
 								filter: 'blur(0px)',
@@ -204,7 +202,6 @@ class WebGlCarousel extends React.Component {
 						ease: 'Expo.easeIn',
 						onComplete: function onComplete() {
 							slideStatusEl.innerHTML = nextSlideStatus;
-
 							TweenMax.to(slideStatusEl, 0.5, {
 								autoAlpha: 1,
 								filter: 'blur(0px)',
@@ -222,6 +219,7 @@ class WebGlCarousel extends React.Component {
 					clearInterval(existInterval);
 				}
 				let interval = setInterval(function () {
+					const paginateButtons = Array.from(paginationContainer.querySelectorAll('button'));
 					pageIndex++;
 					pageIndex = parseInt(pageIndex % paginateButtons.length);
 					render(pageIndex);
@@ -231,12 +229,12 @@ class WebGlCarousel extends React.Component {
 				});
 			};
 			const addEvents = function addEvents() {
-				let pagButtons = Array.from(paginationContainer.querySelectorAll('button'));
-				pagButtons.forEach(function (el) {
-					el.addEventListener('click', function () {
+				let paginateButtons = Array.from(paginationContainer.querySelectorAll('button'));
+				paginateButtons.forEach(function (paginateButton) {
+					paginateButton.addEventListener('click', function () {
 						let slideId = parseInt(this.dataset.slide, 10);
 						render(slideId);
-						// loop();
+						loop();
 					});
 				});
 			};
@@ -257,10 +255,14 @@ class WebGlCarousel extends React.Component {
 				return str.substring(str.length - 6, str.length);
 			}
 			const getButtonsInfo = function () {
+				const paginateButtons = paginationContainer.querySelectorAll('button');
+				paginateButtons.forEach(function (paginateButton) {
+					console.log(paginateButton.getBoundingClientRect());
+				})
 
 			};
 			animate();
-			// loop();
+			loop();
 		};
 
 		let sliderContainer = document.getElementById('slider');

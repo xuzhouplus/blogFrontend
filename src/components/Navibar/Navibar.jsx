@@ -50,7 +50,7 @@ class Navibar extends React.Component {
 						</li>
 						<li className="nav-item dropdown article" hidden={!this.loggedIn}>
 							<NavLink to="/blog" className="nav-link">
-								文章
+								玩耍
 							</NavLink>
 						</li>
 						{/*<li className="nav-item activate">*/}
@@ -58,11 +58,11 @@ class Navibar extends React.Component {
 						{/*激活*/}
 						{/*</NavLink>*/}
 						{/*</li>*/}
-						<li className="nav-item login" hidden={!this.loggedIn}>
-							<NavLink to="/login" className="nav-link">
-								登录
-							</NavLink>
-						</li>
+						{/*<li className="nav-item login" hidden={!this.loggedIn}>*/}
+						{/*	<NavLink to="/login" className="nav-link">*/}
+						{/*		登录*/}
+						{/*	</NavLink>*/}
+						{/*</li>*/}
 						{/*<li className="nav-item register">*/}
 						{/*<NavLink to="/register" className="nav-link">*/}
 						{/*注册*/}
