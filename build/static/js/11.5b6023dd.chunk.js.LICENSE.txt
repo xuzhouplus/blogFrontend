@@ -1,0 +1,32 @@
+/*!
+ * Masonry v4.2.2
+ * Cascading grid layout library
+ * https://masonry.desandro.com
+ * MIT License
+ * by David DeSandro
+ */
+
+/*!
+ * Outlayer v2.1.1
+ * the brains and guts of a layout library
+ * MIT license
+ */
+
+/*!
+ * getSize v2.0.3
+ * measure size of elements
+ * MIT license
+ */
+
+/*!
+ * imagesLoaded v4.1.4
+ * JavaScript is all like "You images are done yet or what?"
+ * MIT License
+ */
+
+/** @preserve
+  * package: sweetalert2-react-content v1.1.0
+  * file: dist/sweetalert2-react-content.umd.js
+  * homepage: https://github.com/sweetalert2/sweetalert2-react-content#readme
+  * license: MIT
+  **/

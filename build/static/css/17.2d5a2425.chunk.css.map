@@ -1,0 +1,1 @@
+{"version":3,"sources":["D:/ReactCode/blogFrontend/src/components/List/LinkList.css"],"names":[],"mappings":"AAAA,sCACC,oBACD","file":"17.2d5a2425.chunk.css","sourcesContent":[".link-list a:focus, .link-list a:hover {\r\n\ttext-decoration: none;\r\n}"]}
